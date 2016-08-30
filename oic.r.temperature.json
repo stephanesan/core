@@ -2,15 +2,22 @@
   "id": "http://openinterconnect.org/iotdatamodels/schemas/oic.r.temperature.json#",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description" : "Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.",
-  "title": "Temperature",
+  "title": "Temperature Actuator",
   "definitions": {
-    "oic.r.temperature": {
+    "oic.r.type": {
+        "type": "number"
+    },
+    "oic.r.actuator": {
+        "properties": {
+            "temperature" : {
+                "$ref": "#/definitions/oic.r.type",
+                "description": "Current temperature setting or measurement"
+            }
+        }
+    },
+    "oic.r.common": {
       "type": "object",
       "properties": {
-        "temperature":  {
-          "type": "number",
-          "description": "Current temperature setting or measurement"
-        },
         "units":  {
           "oneOf": [
             {
@@ -31,7 +38,7 @@
           "readOnly": true,
           "description": "ReadOnly, Array defining min,max values for this temperature on this device",
           "items": {
-            "type": "number"
+            "$ref": "#/definitions/oic.r.type"
           }
         }
       }
@@ -41,7 +48,8 @@
   "allOf": [
     {"$ref": "oic.core.json#/definitions/oic.core"},
     {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
-    {"$ref": "#/definitions/oic.r.temperature"}
+    {"$ref": "#/definitions/oic.r.common"},
+    {"$ref": "#/definitions/oic.r.actuator"}
   ],
   "required": ["temperature"]
 }
